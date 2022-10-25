@@ -8,48 +8,6 @@ from typing import List
 # used to record the elapsed time of the algorithms
 from time import time
 
-# TODO: DON'T COPY PASTE THE SAMPLE PROBLEM SETS TO THE REPORT
-problem_set_depth_0 = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 0]
-]
-problem_set_depth_2 = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [0, 7, 8]
-]
-problem_set_depth_4 = [
-    [1, 2, 3],
-    [5, 0, 6],
-    [4, 7, 8]
-]
-problem_set_depth_8 = [
-    [1, 3, 6],
-    [5, 0, 2],
-    [4, 7, 8]
-]
-problem_set_depth_12 = [
-    [1, 3, 6],
-    [5, 0, 7],
-    [4, 8, 2]
-]
-problem_set_depth_16 = [
-    [1, 6, 7],
-    [5, 0, 3],
-    [4, 8, 2]
-]
-problem_set_depth_20 = [
-    [7, 1, 2],
-    [4, 8, 5],
-    [6, 3, 0]
-]
-problem_set_depth_24 = [
-    [0, 7, 2],
-    [4, 6, 1],
-    [3, 5, 8]
-]
-
 def calculate_h_ucs(state: List[List[int]]) -> int:
     """
     Calculate h(n) for Uniform Cost Search.
@@ -117,21 +75,21 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
     pretty_print(state)
 
     # priority queue consisting of nodes that should be visited next based on minmum f(n) = g(n) + h(n)
-        # pq stores a tuple (cost, depth, state) where cost is calculated by g(n) + h(n)
+        # nodes stores a tuple (cost, depth, state) where cost is calculated by g(n) + h(n)
             # g(n) = the depth of node
             # h(n) = the heuristic value of node (varies based on the the search algorithm used)
-    pq = []
+    nodes = []
 
     # list of states that have been visited
     visited_states = []
 
     # push the initial state to the priority queue
-    heappush(pq, (algorithm_to_queueing_fn[queueing_fn](state) + 0, depth, state))
+    heappush(nodes, (algorithm_to_queueing_fn[queueing_fn](state) + 0, depth, state))
 
     # loop while queue isn't empty
-    while pq:
+    while nodes:
         # get the node with the minimum cost (g(n) + h(n))
-        min_cost, depth, min_state = heappop(pq)
+        min_cost, depth, min_state = heappop(nodes)
 
         # check if the state has already been visited
         if min_state in visited_states:
@@ -154,7 +112,7 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
         # loop through all the possible next states and add them to the priority queue if it hasn't been visited already
         for next_state in list_of_next_states:
             if next_state not in visited_states:
-                heappush(pq, (algorithm_to_queueing_fn[queueing_fn](next_state) + (depth + 1), depth + 1, next_state))
+                heappush(nodes, (algorithm_to_queueing_fn[queueing_fn](next_state) + (depth + 1), depth + 1, next_state))
 
         # print the state to trace the solution
         print(f"\n-- depth {depth} --")
@@ -195,3 +153,46 @@ if __name__ == "__main__":
     # take the difference between start_time and end_time to find the total elapsed time
     print(f"Elapsed time: {end_time - start_time}\n")
     
+
+
+# TODO: DON'T COPY PASTE THE SAMPLE PROBLEM SETS TO THE REPORT
+problem_set_depth_0 = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]
+problem_set_depth_2 = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [0, 7, 8]
+]
+problem_set_depth_4 = [
+    [1, 2, 3],
+    [5, 0, 6],
+    [4, 7, 8]
+]
+problem_set_depth_8 = [
+    [1, 3, 6],
+    [5, 0, 2],
+    [4, 7, 8]
+]
+problem_set_depth_12 = [
+    [1, 3, 6],
+    [5, 0, 7],
+    [4, 8, 2]
+]
+problem_set_depth_16 = [
+    [1, 6, 7],
+    [5, 0, 3],
+    [4, 8, 2]
+]
+problem_set_depth_20 = [
+    [7, 1, 2],
+    [4, 8, 5],
+    [6, 3, 0]
+]
+problem_set_depth_24 = [
+    [0, 7, 2],
+    [4, 6, 1],
+    [3, 5, 8]
+]
