@@ -8,7 +8,7 @@ from typing import List
 # used to record the elapsed time of the algorithms
 from time import time
 
-def calculate_h_ucs(state: List[List[int]]) -> int:
+def h_uniform_cost_search(state: List[List[int]]) -> int:
     """
     Calculate h(n) for Uniform Cost Search.
 
@@ -18,7 +18,7 @@ def calculate_h_ucs(state: List[List[int]]) -> int:
     # Uniform Cost Search has a hard-coded h(n) value of 0
     return 0
 
-def calculate_h_amt(state: List[List[int]]) -> int:
+def h_misplaced_tile(state: List[List[int]]) -> int:
     """
     Calculate h(n) for A* with Misplaced Tiles.
 
@@ -34,7 +34,7 @@ def calculate_h_amt(state: List[List[int]]) -> int:
                 count += 1
     return count
 
-def calculate_h_amd(state:List[List[int]]) -> int:
+def h_manhattan(state:List[List[int]]) -> int:
     """
     Calculate h(n) for A* with Manhattan Distance.
 
@@ -56,9 +56,9 @@ def calculate_h_amd(state:List[List[int]]) -> int:
 
 # maps the name of the function to the queuing function to use
 algorithm_to_queueing_fn = {
-    'uniform_cost_search': calculate_h_ucs,
-    'a_star_misplaced_tile': calculate_h_amt,
-    'a_star_manhattan_distance': calculate_h_amd,
+    'uniform_cost_search': h_uniform_cost_search,
+    'a_star_misplaced_tile': h_misplaced_tile,
+    'a_star_manhattan_distance': h_manhattan,
 }
 
 def general_search(state: List[List[int]], queueing_fn: str) -> None:
