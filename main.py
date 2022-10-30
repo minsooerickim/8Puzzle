@@ -70,9 +70,6 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
     # depth of the puzzle
     depth = 0
 
-    # count the number of expanded nodes
-    expanded_nodes_count = 0
-
     # print the depth and state of the initial puzzle
     print(f"\n-- depth {depth} --")
     pretty_print(state)
@@ -98,9 +95,6 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
         if min_state in visited_states:
             continue
 
-        # increment number of expanded nodes count
-        expanded_nodes_count += 1
-
         # add the state to visited_states to mark it as visited
         visited_states.append(min_state)
         
@@ -110,7 +104,6 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
             print(f"\n-- depth {depth} --")
             pretty_print(min_state)
             print(f'\n\ndepth of the solution: {depth}\n')
-            print(f'number of nodes expanded: {expanded_nodes_count}')
             return
 
         # generate a list of possible next states of the popped node's state
