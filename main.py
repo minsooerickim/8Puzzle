@@ -118,6 +118,11 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
 
         # flag to indicate num_nodes_expanded was already incremented
         incremented = False
+
+        # print the state to trace the solution
+        print(f"\n-- depth {depth} --")
+        pretty_print(min_state)
+        
         # loop through all the possible next states and add them to the priority queue if it hasn't been visited already
         for next_state in list_of_next_states:
             if next_state not in visited_states:
@@ -127,10 +132,6 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
                     num_nodes_expanded += 1
                     incremented = True
                 heappush(nodes, (algorithm_to_queueing_fn[queueing_fn](next_state) + (depth + 1), depth + 1, next_state))
-
-        # print the state to trace the solution
-        print(f"\n-- depth {depth} --")
-        pretty_print(min_state)
 
     # puzzle is unsolvable if it reaches this point
     print('Puzzle not solvable!')
