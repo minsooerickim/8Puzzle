@@ -73,9 +73,8 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
     # track number of nodes expanded
     num_nodes_expanded = 0
 
-    # print the depth and state of the initial puzzle
-    print(f"\n-- depth {depth} --")
-    pretty_print(state)
+    # max queue size
+    max_queue_size = 0
 
     # priority queue consisting of nodes that should be visited next based on minmum f(n) = g(n) + h(n)
         # nodes stores a tuple (cost, depth, state) where cost is calculated by g(n) + h(n)
@@ -91,6 +90,9 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
 
     # loop while queue isn't empty
     while nodes:
+        # record max queue size
+        max_queue_size = max(max_queue_size, len(nodes))
+
         # get the node with the minimum cost (g(n) + h(n))
         min_cost, depth, min_state = heappop(nodes)
 
@@ -100,24 +102,30 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
 
         # add the state to visited_states to mark it as visited
         visited_states.append(min_state)
-
-        # increment number of nodes expanded
-        num_nodes_expanded += 1
         
         # check if min_state is the goal state
         if min_state == goal_state:
             # stop searching when the goal state is found
             print(f"\n-- depth {depth} --")
             pretty_print(min_state)
-            print(f'\n\ndepth of the solution: {depth}\n')
+            print(f'\n\ndepth of the solution: {depth}')
+            print(f'\nnumber of nodes expanded: {num_nodes_expanded}')
+            print(f'max queue size: {max_queue_size}')
             return
 
         # generate a list of possible next states of the popped node's state
         list_of_next_states = generate_next_states(min_state)
 
+        # flag to indicate num_nodes_expanded was already incremented
+        incremented = False
         # loop through all the possible next states and add them to the priority queue if it hasn't been visited already
         for next_state in list_of_next_states:
             if next_state not in visited_states:
+                # increment number of nodes expanded ONCE
+                if not incremented:
+                    print(f'EXPANDED STATE: {min_state}')
+                    num_nodes_expanded += 1
+                    incremented = True
                 heappush(nodes, (algorithm_to_queueing_fn[queueing_fn](next_state) + (depth + 1), depth + 1, next_state))
 
         # print the state to trace the solution
