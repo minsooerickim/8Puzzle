@@ -109,6 +109,7 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
             print(f"\n-- depth {depth} --")
             pretty_print(min_state)
             print(f'\n\ndepth of the solution: {depth}')
+            print(f'\ng(n): {depth} h(n): {min_cost - depth}')
             print(f'\nnumber of nodes expanded: {num_nodes_expanded}')
             print(f'max queue size: {max_queue_size}')
             return
@@ -122,7 +123,8 @@ def general_search(state: List[List[int]], queueing_fn: str) -> None:
         # print the state to trace the solution
         print(f"\n-- depth {depth} --")
         pretty_print(min_state)
-        
+        print(f'g(n): {depth} h(n): {min_cost - depth}')
+
         # loop through all the possible next states and add them to the priority queue if it hasn't been visited already
         for next_state in list_of_next_states:
             if next_state not in visited_states:
